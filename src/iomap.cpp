@@ -94,13 +94,13 @@ bool IOMap::loadMap(Map* map, const std::string& identifier)
 	}
 
 	uint32_t headerVersion = root_header.version;
-	if (headerVersion <= 0) {
+    /*if (headerVersion <= 0) {
 		//In otbm version 1 the count variable after splashes/fluidcontainers and stackables
 		//are saved as attributes instead, this solves alot of problems with items
 		//that is changed (stackable/charges/fluidcontainer/splash) during an update.
 		setLastErrorString("This map need to be upgraded by using the latest map editor version to be able to load correctly.");
-		return false;
-	}
+        return false;
+    }*/
 
 	if (headerVersion > 2) {
 		setLastErrorString("Unknown OTBM version detected.");
@@ -124,6 +124,11 @@ bool IOMap::loadMap(Map* map, const std::string& identifier)
 	std::cout << "> Map size: " << root_header.width << "x" << root_header.height << '.' << std::endl;
 	map->width = root_header.width;
 	map->height = root_header.height;
+
+    std::cout << "> Map version info: " << std::endl;
+    std::cout << "\t\t OTBM version: " << root_header.version << std::endl;
+    std::cout << "\t\t OTBM version items: minor is " << root_header.minorVersionItems << " major is " << root_header.majorVersionItems << std::endl;
+    std::cout << "\t\t OTB version: minor is " << Items::dwMinorVersion << " major is " << Items::dwMajorVersion << std::endl;
 
 	NODE nodeMap = f.getChildNode(root, type);
 	if (type != OTBM_MAP_DATA) {

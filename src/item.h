@@ -741,6 +741,10 @@ class Item : virtual public Thing
 			return !parent || parent->isRemoved();
 		}
 
+        static void setMapVersion(uint32_t n) {
+                    mapVersion = n;
+        }
+
 	protected:
 		std::string getWeightDescription(uint32_t weight) const;
 
@@ -753,6 +757,8 @@ class Item : virtual public Thing
 		uint8_t count; // number of stacked items
 
 		bool loadedFromMap;
+
+        static uint32_t mapVersion;
 
 		//Don't add variables here, use the ItemAttribute class.
 };
